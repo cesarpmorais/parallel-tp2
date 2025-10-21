@@ -122,10 +122,8 @@ void bottom_up_step(Graph graph, solution *sol, int depth, vertex_set *new_front
 #pragma omp parallel for schedule(guided, 1024)
     for (int node = 0; node < graph->num_nodes; node++)
     {
-
         if (sol->distances[node] == NOT_VISITED_MARKER)
         {
-
             int start_edge = graph->incoming_starts[node];
             int end_edge = (node == graph->num_nodes - 1)
                                ? graph->num_edges
@@ -177,6 +175,7 @@ void bfs_bottom_up(Graph graph, solution *sol)
 
         vertex_set_clear(new_frontier);
         bottom_up_step(graph, sol, depth, new_frontier);
+
 #ifdef VERBOSE
         double end_time = CycleTimer::currentSeconds();
         printf("frontier=%-10d %.4f sec\n", frontier->count, end_time - start_time);
